@@ -1,7 +1,17 @@
-ORG 0x7c00
+ORG 0x0
 BITS 16
 
 start:
+    cli     ; clear (diable) interrupts
+    mov ax, 0x7c0
+    mov ds, ax
+    mov es, ax ; set data segments to be universal for all bioses
+
+    mov ax, 0x00
+    mov ss, ax
+    mov sp, 0x7c00
+    sti     ; enable interrupts
+
     mov si, message ; load message label address
     call print
 

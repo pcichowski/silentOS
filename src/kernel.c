@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "idt/idt.h"
 
 uint16_t *video_mem = 0;
 
@@ -80,4 +81,6 @@ kernel_main()
 
     print("hello world, the print function is working correctly\n");
     print("it even supports newlines");
+
+    idt_init();
 }

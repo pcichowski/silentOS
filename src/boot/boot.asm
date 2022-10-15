@@ -29,8 +29,8 @@ step2:
     mov eax, cr0
     or eax, 0x1
     mov cr0, eax
-    jmp CODE_SEG:load32
-
+    ;jmp CODE_SEG:load32
+    jmp $
 
 ; -- GDT --
 gdt_start:
@@ -57,34 +57,6 @@ gdt_end:
 gdt_descriptor:
     dw gdt_end - gdt_start-1
     dd gdt_start
-
-;
-; ---- protected mode starts here ----
-;
-[BITS 32]
-load32:
-    ; set data segments to the correct GDT
-    mov ax, DATA_SEG
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
-
-    ; move the stack furthet
-    mov ebp, 0x00200000
-    mov esp, ebp
-
-    ; enable the A20 line
-    in al, 0x92
-    test al, 2
-    jnz .after
-    or al, 2
-    and al, 0xFE
-    out 0x92, al
-.after:
-
-    jmp $
 
 times 510- ($ - $$) db 0 ; zero out 510 bytes of data
 dw 0xAA55                ; add boot signature

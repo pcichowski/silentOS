@@ -31,4 +31,4 @@ _start:
     call kernel_main
     jmp $
 
-times 512- ($ - $$) db 0 ; align kernel.asm to 512 bytes
+times 512-($ - $$) db 0 ; align kernel.asm to 512 bytes

@@ -7,14 +7,16 @@ OS created from scratch
 - `nasm`
 - `qemu-system-x86_64`
 
-## Building bootloader image
+## Build the image
 
 ```
-nasm -f bin boot.asm -o boot.bin
+./build.sh
 ```
 
-## Running the bootloader
+This sets the default target and invokes `make all`
+
+## Running the OS
 
 ```
-qemu-system-x86_64 -hda ./boot.bin
+qemu-system-x86_64 -hda ./os.bin
 ```

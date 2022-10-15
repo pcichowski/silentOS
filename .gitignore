@@ -1,3 +1,4 @@
 *.bin
 *.o
 build/kernel.asm.o
+.vscode

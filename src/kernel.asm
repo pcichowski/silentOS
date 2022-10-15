@@ -27,3 +27,5 @@ _start:
     .after:
 
     jmp $
+
+times 512- ($ - $$) db 0 ; align kernel.asm to 512 bytes

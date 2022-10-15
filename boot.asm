@@ -10,20 +10,6 @@ times 33  db 0 ; zero out the rest of the BPB
 start:
     jmp 0x7c0:step2 ; set code segment to 0x7c0
 
-handle_zero: ; handle int 0x00
-    mov ah, 0eh
-    mov al, 'A'
-    mov bx, 0x00
-    int 0x10
-    iret
-
-handle_one:
-    mov ah, 0eh
-    mov al, 'V'
-    mov bx, 0x00
-    int 0x10
-    iret
-
 step2:
     cli     ; clear (diable) interrupts
     mov ax, 0x7c0
@@ -34,19 +20,24 @@ step2:
     mov sp, 0x7c00
     sti     ; enable interrupts
 
-    mov word[ss:0x00], handle_zero ; stack segment points to 0x00, set offset in interrupt table to handle_zero interrupt handler
-    mov word[ss:0x02], 0x7c0 ; set segment of interrupt to code
+    mov ah, 2 ; read sector command
+    mov al, 1 ; read one sector
+    mov ch, 0 ; low eight bits
+    mov cl, 2
+    mov dh, 0
+    mov bx, buffer
+    int 0x13
+    jc error
 
-    mov word[ss:0x04], handle_one
-    mov word[ss:0x06], 0x7c0
-
-    int 0
-    int 1
-
-    mov si, message ; load message label address
+    mov si, buffer
     call print
 
     jmp $           ; do not go to lower instructions
+
+error:
+    mov si, error_message
+    call print
+    jmp $
 
 print:
 .loop:
@@ -64,7 +55,9 @@ print_char:
     int 0x10
     ret
 
-message: db 'hello world', 0
+error_message: db 'Failed to load sector', 0
 
 times 510- ($ - $$) db 0 ; zero out 510 bytes of data
 dw 0xAA55                ; add boot signature
+
+buffer:

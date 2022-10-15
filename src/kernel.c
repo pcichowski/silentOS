@@ -39,6 +39,12 @@ console_putchar(int x, int y, char a, char colour)
 void
 console_writechar(char c, char colour)
 {
+    if (c == '\n') {
+        console_row += 1;
+        console_col = 0;
+        return;
+    }
+
     console_putchar(console_col, console_row, c, colour);
 
     console_col += 1;
@@ -72,5 +78,6 @@ kernel_main()
 {
     console_initialize();
 
-    print("hello world, the print function is working correctly");
+    print("hello world, the print function is working correctly\n");
+    print("it even supports newlines");
 }

@@ -87,5 +87,6 @@ kernel_main()
 
     idt_init();
 
-    outb(0x60, 0xff);
+    enable_interrupts();
+
 }

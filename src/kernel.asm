@@ -29,6 +29,17 @@ _start:
     out 0x92, al
     .after:
 
+    ; remap master PIC
+    mov al, 00010001b ; initialization mode
+    out 0x20, al
+
+    mov al, 0x20        ; start master ISR at interrupt 0x20
+    out 0x21, al
+
+    mov al, 00000001b
+    out 0x21, al
+    ; remapped master PIC
+
     call kernel_main
     jmp $
 

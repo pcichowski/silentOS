@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
 
 uint16_t *video_mem = 0;
 
@@ -85,8 +86,9 @@ kernel_main()
     print("hello world, the print function is working correctly\n");
     print("it even supports newlines\n");
 
-    idt_init();
+    kheap_init();
 
+    idt_init();
     enable_interrupts();
 
 }

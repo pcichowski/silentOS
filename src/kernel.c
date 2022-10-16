@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "idt/idt.h"
+#include "io/io.h"
 
 uint16_t *video_mem = 0;
 
@@ -86,9 +87,5 @@ kernel_main()
 
     idt_init();
 
-    print("test\n");
-
-    problem();
-
-    print("test2\n");
+    outb(0x60, 0xff);
 }

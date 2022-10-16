@@ -2,11 +2,14 @@
 #include "idt/idt.h"
 #include "io/io.h"
 #include "memory/heap/kheap.h"
+#include "memory/pmap/pmap.h"
 
 uint16_t *video_mem = 0;
 
 uint16_t console_row = 0;
 uint16_t console_col = 0;
+
+static struct pmap_chunk* kernel_chunk = 0;
 
 /*
  * Makes a correct console character with a specified background
@@ -89,6 +92,13 @@ kernel_main()
     kheap_init();
 
     idt_init();
+
+    kernel_chunk = pmap_new_chunk(PMAP_IS_WRITEABLE | PMAP_IS_PRESENT | PMAP_ACCESS_FROM_ALL);
+
+    pmap_switch(pmap_chunk_get_directory(kernel_chunk));
+
+    pmap_enable();
+
     enable_interrupts();
 
 }

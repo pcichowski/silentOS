@@ -1,4 +1,4 @@
-FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o
+FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/memory/pmap/pmap.o ./build/memory/pmap/pmap.asm.o
 
 INCLUDES = -I./src
 
@@ -41,6 +41,11 @@ all: ./bin/boot.bin ./bin/kernel.bin
 ./build/memory/heap/kheap.o: ./src/memory/heap/kheap.c
 	i686-elf-gcc $(INCLUDES) -I./src/memory/heap $(FLAGS) -std=gnu99 -c ./src/memory/heap/kheap.c -o ./build/memory/heap/kheap.o
 
+./build/memory/pmap/pmap.o: ./src/memory/pmap/pmap.c
+	i686-elf-gcc $(INCLUDES) -I./src/memory/pmap $(FLAGS) -std=gnu99 -c ./src/memory/pmap/pmap.c -o ./build/memory/pmap/pmap.o
+
+./build/memory/pmap/pmap.asm.o: ./src/memory/pmap/pmap.asm
+	nasm -f elf -g ./src/memory/pmap/pmap.asm -o ./build/memory/pmap/pmap.asm.o
 
 clean:
 	rm -rf ./bin/boot.bin

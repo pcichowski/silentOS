@@ -1,6 +1,6 @@
 #include "idt.h"
 #include "config.h"
-#include "../memory/memory.h"
+#include "memory/memory.h"
 #include "kernel.h"
 
 struct idt_desc idt_descriptors[MAX_INTERRUPTS_NUM];

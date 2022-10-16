@@ -7,28 +7,12 @@ uint16_t console_row = 0;
 uint16_t console_col = 0;
 
 /*
- * Clears the console screen
+ * Makes a correct console character with a specified background
  */
-void
-console_initialize()
+uint16_t
+console_char(char a, char colour)
 {
-    video_mem = (uint16_t*)(0xB8000);
-
-    for (int i = 0; i < VGA_HEIGHT; i++) {
-        for (int j = 0; j < VGA_WIDTH; j++) {
-            console_putchar(j, i, ' ', 0);
-        }
-    }
-}
-
-size_t
-strlen(const char *str)
-{
-    size_t len = 0;
-    while(str[len]) {
-        len += 1;
-    }
-    return len;
+    return (colour << 8 ) | a;
 }
 
 void
@@ -57,12 +41,28 @@ console_writechar(char c, char colour)
 }
 
 /*
- * Makes a correct console character with a specified background
+ * Clears the console screen
  */
-uint16_t
-console_char(char a, char colour)
+void
+console_initialize()
 {
-    return (colour << 8 ) | a;
+    video_mem = (uint16_t*)(0xB8000);
+
+    for (int i = 0; i < VGA_HEIGHT; i++) {
+        for (int j = 0; j < VGA_WIDTH; j++) {
+            console_putchar(j, i, ' ', 0);
+        }
+    }
+}
+
+size_t
+strlen(const char *str)
+{
+    size_t len = 0;
+    while(str[len]) {
+        len += 1;
+    }
+    return len;
 }
 
 void
@@ -74,13 +74,21 @@ print(const char *str)
     }
 }
 
+extern void problem();
+
 void
 kernel_main()
 {
     console_initialize();
 
     print("hello world, the print function is working correctly\n");
-    print("it even supports newlines");
+    print("it even supports newlines\n");
 
     idt_init();
+
+    print("test\n");
+
+    problem();
+
+    print("test2\n");
 }

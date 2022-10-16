@@ -11,6 +11,19 @@ uint16_t console_col = 0;
 
 static struct pmap_chunk* kernel_chunk = 0;
 
+const char *kernel_logo1 =
+"     _ _            _    ____ ____\n";
+const char *kernel_logo2 =
+"    (_) |          | |  / _  /  ___\\\n";
+const char *kernel_logo3 =
+" ___ _| | ___ _ __ | |_| | | \\ `--.\n";
+const char *kernel_logo4 =
+"/ __| | |/ _ \\ '_ \\| __| | | |`--. \\\n";
+const char *kernel_logo5 =
+"\\__ \\ | |  __/ | | | |_\\ \\_/ /\\__/ /\n";
+const char *kernel_logo6 =
+"|___/_|_|\\___|_| |_|\\__|\\___/\\____/\n\n";
+
 /*
  * Makes a correct console character with a specified background
  */
@@ -86,8 +99,14 @@ kernel_main()
 {
     console_initialize();
 
-    print("hello world, the print function is working correctly\n");
-    print("it even supports newlines\n");
+    print(kernel_logo1);
+    print(kernel_logo2);
+    print(kernel_logo3);
+    print(kernel_logo4);
+    print(kernel_logo5);
+    print(kernel_logo6);
+
+    print("\nWelcome to silentOS v1.0\n");
 
     kheap_init();
 

@@ -111,6 +111,8 @@ kernel_main()
 
     kheap_init();
 
+    disk_search_and_init();
+
     idt_init();
 
     kernel_chunk = pmap_new_chunk(PMAP_IS_WRITEABLE | PMAP_IS_PRESENT | PMAP_ACCESS_FROM_ALL);
@@ -118,9 +120,6 @@ kernel_main()
     pmap_switch(pmap_chunk_get_directory(kernel_chunk));
 
     pmap_enable();
-
-    char buf[512];
-    disk_read_sector(0, 1, buf);
 
     enable_interrupts();
 

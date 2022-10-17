@@ -1,5 +1,10 @@
+#include "disk.h"
 #include "io/io.h"
+#include "memory/memory.h"
+#include "config.h"
+#include "status.h"
 
+struct disk disk;
 
 int
 disk_read_sector(int lba, int total, void *buf)
@@ -28,4 +33,31 @@ disk_read_sector(int lba, int total, void *buf)
     }
 
     return 0;
+}
+
+void
+disk_search_and_init()
+{
+    memset(&disk, 0, sizeof(disk));
+
+    disk.type = DISK_TYPE_REAL;
+    disk.sector_size = SECTOR_SIZE;
+}
+
+struct disk*
+disk_get(int index)
+{
+    if (index != 0)
+        return 0;
+
+    return &disk;
+}
+
+int
+disk_read_block(struct disk *idisk, unsigned int lba, int total, void *buf)
+{
+    if (idisk != &disk)
+        return -EIO;
+
+    return disk_read_sector(lba, total, buf);
 }

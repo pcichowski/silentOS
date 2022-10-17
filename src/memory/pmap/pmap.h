@@ -19,7 +19,10 @@ struct pmap_chunk {
 
 struct pmap_chunk *pmap_new_chunk(uint8_t flags);
 void pmap_switch(uint32_t *directory);
-void pmap_enable();
+extern void pmap_enable();
+
+int pmap_set(uint32_t *directory, void *va, uint32_t val);
+int pmap_is_aligned(void *addr);
 uint32_t *pmap_chunk_get_directory(struct pmap_chunk *chunk);
 
 #endif // PMAP_H

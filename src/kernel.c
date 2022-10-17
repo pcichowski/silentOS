@@ -116,7 +116,18 @@ kernel_main()
 
     pmap_switch(pmap_chunk_get_directory(kernel_chunk));
 
+    char *ptr = kzalloc(4096);
+
+    pmap_set(pmap_chunk_get_directory(kernel_chunk), (void *)0x1000, (uint32_t)ptr | PMAP_ACCESS_FROM_ALL | PMAP_IS_PRESENT | PMAP_IS_WRITEABLE);
+
     pmap_enable();
+
+    char* ptr2 = (char*) 0x1000;
+    ptr2[0] = 'A';
+    ptr2[1] = 'B';
+    print(ptr2);
+
+    print(ptr);
 
     enable_interrupts();
 

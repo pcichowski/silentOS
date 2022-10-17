@@ -58,8 +58,8 @@ pmap_get_indexes(void *va, uint32_t *directory_index_out, uint32_t *table_index_
         goto done;
     }
 
-    *directory_index_out = (uint32_t) va / (PMAP_TOTAL_ENTRIES_PER_TABLE * PMAP_PAGE_SIZE);
-    *table_index_out = (uint32_t) va % ((PMAP_TOTAL_ENTRIES_PER_TABLE * PMAP_PAGE_SIZE) / PMAP_PAGE_SIZE);
+    *directory_index_out = ((uint32_t) va / (PMAP_TOTAL_ENTRIES_PER_TABLE * PMAP_PAGE_SIZE));
+    *table_index_out = (uint32_t) va % (PMAP_TOTAL_ENTRIES_PER_TABLE * PMAP_PAGE_SIZE) / PMAP_PAGE_SIZE;
 
 done:
     return status;

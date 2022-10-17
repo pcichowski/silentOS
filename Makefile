@@ -1,4 +1,4 @@
-FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/memory/pmap/pmap.o ./build/memory/pmap/pmap.asm.o
+FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/memory/pmap/pmap.o ./build/memory/pmap/pmap.asm.o ./build/disk/disk.o
 
 INCLUDES = -I./src
 
@@ -46,6 +46,9 @@ all: ./bin/boot.bin ./bin/kernel.bin
 
 ./build/memory/pmap/pmap.asm.o: ./src/memory/pmap/pmap.asm
 	nasm -f elf -g ./src/memory/pmap/pmap.asm -o ./build/memory/pmap/pmap.asm.o
+
+./build/disk/disk.o: ./src/disk/disk.c
+	i686-elf-gcc $(INCLUDES) -I./src/disk $(FLAGS) -std=gnu99 -c ./src/disk/disk.c -o ./build/disk/disk.o
 
 clean:
 	rm -rf ./bin/boot.bin

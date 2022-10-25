@@ -4,6 +4,8 @@
 #include "memory/heap/kheap.h"
 #include "memory/pmap/pmap.h"
 #include "disk/disk.h"
+#include "filesystem/pathparser.h"
+#include "string/string.h"
 
 uint16_t *video_mem = 0;
 
@@ -74,16 +76,6 @@ console_initialize()
     }
 }
 
-size_t
-strlen(const char *str)
-{
-    size_t len = 0;
-    while(str[len]) {
-        len += 1;
-    }
-    return len;
-}
-
 void
 print(const char *str)
 {
@@ -123,4 +115,9 @@ kernel_main()
 
     enable_interrupts();
 
+
+    struct path_root *root_path = pathparser_parse("0:/bin/shell.exe", NULL);
+    if (root_path) {
+
+    }
 }

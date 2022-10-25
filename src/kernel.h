@@ -6,7 +6,7 @@
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 24
-
+#define MAX_PATH_LENGTH 108
 
 void kernel_main();
 

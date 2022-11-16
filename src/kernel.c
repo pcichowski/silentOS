@@ -100,7 +100,7 @@ kernel_main()
     print(kernel_logo5);
     print(kernel_logo6);
 
-    print("\nWelcome to silentOS v1.0\n");
+    print("\nWelcome to silentOS v0.0.1\n");
 
     kheap_init();
 

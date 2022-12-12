@@ -7,6 +7,7 @@
 #include "filesystem/pathparser.h"
 #include "string/string.h"
 #include "disk/disk_stream.h"
+#include "filesystem/file.h"
 
 uint16_t *video_mem = 0;
 
@@ -100,12 +101,18 @@ kernel_main()
     print(kernel_logo5);
     print(kernel_logo6);
 
-    print("\nWelcome to silentOS v0.0.1\n");
+    print("\nWelcome to silentOS v0.0.2\n");
 
+    // initialize the heap
     kheap_init();
 
+    // initialize fat16 filesystem
+    fs_init();
+
+    // search for and initialize available disks
     disk_search_and_init();
 
+    // initialize the interrupt descriptor table
     idt_init();
 
     kernel_chunk = pmap_new_chunk(PMAP_IS_WRITEABLE | PMAP_IS_PRESENT | PMAP_ACCESS_FROM_ALL);
@@ -117,11 +124,7 @@ kernel_main()
     enable_interrupts();
 
 
-    struct disk_stream *stream = diskstream_new(0);
 
-    diskstream_seek(stream, 0x201);
-    char c = 0;
-    diskstream_read(stream, &c, 1);
     while (1)
     {
         

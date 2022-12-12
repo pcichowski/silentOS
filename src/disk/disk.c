@@ -40,6 +40,7 @@ disk_search_and_init()
 {
     memset(&disk, 0, sizeof(disk));
 
+    disk.id = 0; // only one disk at the moment
     disk.type = DISK_TYPE_REAL;
     disk.sector_size = SECTOR_SIZE;
     disk.filesystem = fs_resolve(&disk);

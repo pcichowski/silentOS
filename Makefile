@@ -1,4 +1,4 @@
-FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/memory/pmap/pmap.o ./build/memory/pmap/pmap.asm.o ./build/disk/disk.o ./build/filesystem/pathparser.o ./build/string/string.o ./build/disk/disk_stream.o
+FILES = ./build/kernel.asm.o ./build/kernel.o ./build/idt/idt.asm.o ./build/idt/idt.o ./build/memory/memory.o ./build/io/io.asm.o ./build/memory/heap/heap.o ./build/memory/heap/kheap.o ./build/memory/pmap/pmap.o ./build/memory/pmap/pmap.asm.o ./build/disk/disk.o ./build/filesystem/pathparser.o ./build/string/string.o ./build/disk/disk_stream.o ./build/filesystem/file.o
 
 INCLUDES = -I./src
 
@@ -54,6 +54,9 @@ all: ./bin/boot.bin ./bin/kernel.bin
 
 ./build/disk/disk.o: ./src/disk/disk.c
 	i686-elf-gcc $(INCLUDES) -I./src/disk $(FLAGS) -std=gnu99 -c ./src/disk/disk.c -o ./build/disk/disk.o
+
+./build/filesystem/file.o: ./src/filesystem/file.c
+	i686-elf-gcc $(INCLUDES) -I./src/filesystem $(FLAGS) -std=gnu99 -c ./src/filesystem/file.c -o ./build/filesystem/file.o
 
 ./build/filesystem/pathparser.o: ./src/filesystem/pathparser.c
 	i686-elf-gcc $(INCLUDES) -I./src/filesystem $(FLAGS) -std=gnu99 -c ./src/filesystem/pathparser.c -o ./build/filesystem/pathparser.o

@@ -3,6 +3,7 @@
 #include "memory/memory.h"
 #include "memory/heap/kheap.h"
 #include "status.h"
+#include "kernel.h"
 
 struct filesystem *filesystems[MAX_FILESYSTEMS];
 
@@ -74,4 +75,37 @@ file_new_descriptor(struct file_descriptor **desc_out)
     }
 
     return status;
+}
+
+static struct file_descriptor *
+file_get_descriptor(int fd)
+{
+    if (fd <= 0 || fd >= MAX_FILE_DESCRIPTORS) {
+        return 0;
+    }
+
+    int index = fd - 1; // descriptors start at 1
+
+    return file_descriptors[index];
+}
+
+struct filesystem *
+fs_resolve(struct disk *disk)
+{
+    struct filesystem *fs = 0;
+
+    for (int i = 0; i < MAX_FILESYSTEMS; i++) {
+        if (filesystems[i] != 0 && filesystems[i]->resolve(disk) == 0) {
+            fs = filesystems[i];
+            break;
+        }
+    }
+
+    return fs;
+}
+
+int 
+fopen(const char *filename, const char *mode)
+{
+    return -EIO;
 }

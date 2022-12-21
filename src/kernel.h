@@ -15,4 +15,8 @@ void console_initialize();
 void console_putchar(int x, int y, char a, char colour);
 void print(const char *str);
 
+#define ERROR(value)    (void *)(value)
+#define ERROR_I(value)  (int)(value)
+#define ISERR(value)  ((int)(value) < 0)
+
 #endif

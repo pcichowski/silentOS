@@ -124,6 +124,21 @@ kernel_main()
     enable_interrupts();
 
 
+    int fd1 = fopen("0:/hello.txt", "r");
+    if (fd1) {
+        print("\nhello.txt successfully opened!\n");
+    }
+    else {
+        print("\nfailed to open hello.txt :(\n");
+    }
+
+    int fd = fopen("0:/hello2.txt", "r");
+    if (fd) {
+        print("\nhello2.txt successfully opened!\n");
+    }
+    else {
+        print("\nfailed to open hello2.txt :(\n");
+    }
 
     while (1)
     {

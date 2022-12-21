@@ -101,7 +101,7 @@ kernel_main()
     print(kernel_logo5);
     print(kernel_logo6);
 
-    print("\nWelcome to silentOS v0.0.2\n");
+    print("\nWelcome to silentOS v0.1.4\n");
 
     // initialize the heap
     kheap_init();
@@ -124,21 +124,31 @@ kernel_main()
     enable_interrupts();
 
 
-    int fd1 = fopen("0:/hello.txt", "r");
-    if (fd1) {
-        print("\nhello.txt successfully opened!\n");
+    int fd = fopen("0:/hello.txt", "r");
+    if (fd) {
+        print("\nhello.txt has opened successfully!\n\n");
+
+        char buf[20];
+        fread(buf, 20, 1, fd);
+        buf[19] = 0x00;
+        print(buf);
     }
     else {
         print("\nfailed to open hello.txt :(\n");
+
     }
 
-    int fd = fopen("0:/hello2.txt", "r");
+    fd = fopen("0:/plik.txt", "r");
     if (fd) {
-        print("\nhello2.txt successfully opened!\n");
+        print("\n\n\nplik.txt has opened successfully!\n\n");
+
+        char buf[123];
+        fread(buf, 123, 1, fd);
+        buf[122] = 0x00;
+        print(buf);
     }
-    else {
-        print("\nfailed to open hello2.txt :(\n");
-    }
+
+
 
     while (1)
     {

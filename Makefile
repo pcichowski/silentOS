@@ -10,9 +10,10 @@ all: ./bin/boot.bin ./bin/kernel.bin
 	dd if=./bin/kernel.bin >> ./bin/os.bin
 	dd if=/dev/zero bs=1048576 count=16 >> ./bin/os.bin
 	
-	# copy a dummy file
+	# copy some dummy files
 	sudo mount -t vfat ./bin/os.bin /mnt/d
 	sudo cp ./hello.txt /mnt/d
+	sudo cp ./plik.txt /mnt/d
 	sudo umount /mnt/d
 
 ./bin/kernel.bin: $(FILES)
